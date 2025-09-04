@@ -1,0 +1,10 @@
+UNI1	A001	F001	D001	1001	19	8.5	Regularidad_buena
+UNI1	A002	F001	D002	1002	20	6.0	Necesita_mejorar_en_teoria
+UNI1	A003	F002	D001	1003	22	9.0	Excelente_participacion
+UNI1	A004	F002	D002	1004	21	7.5	Cumplió_con_practicas
+UNI1	A005	F003	D001	1005	18	5.0	Requiere_apoyo_adicional
+UNI2	A006	F001	D003	2001	23	8.0	Buen_desempenio_en_grupo
+UNI2	A007	F002	D004	2002	24	4.5	Ausencias_frecuentes
+UNI2	A008	F003	D003	2003	20	10.0	Sobresaliente
+UNI2	A009	F003	D004	2004	25	6.5	Mejoro_respecto_al_parcial
+UNI2	A010	F001	D001	2005	19	7.0	Rendimiento_estable
