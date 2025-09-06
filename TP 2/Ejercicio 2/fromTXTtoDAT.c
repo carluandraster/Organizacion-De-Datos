@@ -43,19 +43,19 @@ void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
         return;
     }
 
-    AlumnoFijo alumnoFijo;
+    AlumnoVariable alumno;
     while (fscanf(txtFile, "%4s %4s %4s %4s %d %d %f %s",
-                  alumnoFijo.codigoUniversidad,
-                  alumnoFijo.codigoAsignatura,
-                  alumnoFijo.codigoFacultad,
-                  alumnoFijo.codigoDocente,
-                  &alumnoFijo.legajo,
-                  &alumnoFijo.edad,
-                  &alumnoFijo.nota,
-                  alumnoFijo.observaciones) == 8)
+                  alumno.codigoUniversidad,
+                  alumno.codigoAsignatura,
+                  alumno.codigoFacultad,
+                  alumno.codigoDocente,
+                  &alumno.legajo,
+                  &alumno.edad,
+                  &alumno.nota,
+                  alumno.observaciones) == 8)
     {
-        alumnoFijo.baja = 0; // Asumiendo que los datos leídos no están dados de baja
-        fwrite(&alumnoFijo, sizeof(AlumnoFijo), 1, datFile);
+        alumno.baja = 0; // Asumiendo que los datos leídos no están dados de baja
+        fwrite(&alumno, sizeof(AlumnoVariable), 1, datFile);
     }
 
     fclose(txtFile);
@@ -64,6 +64,6 @@ void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
 
 int main(int argc, char const *argv[])
 {
-    fromTXTtoDAT("alumnos.txt", "alumnos.dat");
+    fromTXTtoDAT("alumnos.txt", "alumnosVariables.dat");
     return 0;
 }
