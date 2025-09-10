@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct
 {
@@ -28,6 +30,11 @@ typedef struct
 
 void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
 {
+    char codigoUniversidad[5];
+    char codigoFacultad[5];
+    char codigoAsignatura[5];
+    char codigoDocente[5];
+    char observaciones[255];
     FILE *txtFile = fopen(inputTXT, "rt");
     if (txtFile == NULL)
     {
@@ -44,18 +51,33 @@ void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
     }
 
     AlumnoVariable alumno;
-    while (fscanf(txtFile, "%4s %4s %4s %4s %d %d %f %s",
-                  alumno.codigoUniversidad,
-                  alumno.codigoAsignatura,
-                  alumno.codigoFacultad,
-                  alumno.codigoDocente,
+    while (fscanf(txtFile, "%s %s %s %s %d %d %f %s",
+                  codigoUniversidad,
+                  codigoAsignatura,
+                  codigoFacultad,
+                  codigoDocente,
                   &alumno.legajo,
                   &alumno.edad,
                   &alumno.nota,
-                  alumno.observaciones) == 8)
+                  observaciones) == 8)
     {
+        alumno.codigoUniversidad = malloc(strlen(codigoUniversidad) + 1);
+        strcpy(alumno.codigoUniversidad, codigoUniversidad);
+        alumno.codigoFacultad = malloc(strlen(codigoFacultad) + 1);
+        strcpy(alumno.codigoFacultad, codigoFacultad);
+        alumno.codigoAsignatura = malloc(strlen(codigoAsignatura) + 1);
+        strcpy(alumno.codigoAsignatura, codigoAsignatura);
+        alumno.codigoDocente = malloc(strlen(codigoDocente) + 1);
+        strcpy(alumno.codigoDocente, codigoDocente);
+        alumno.observaciones = malloc(strlen(observaciones) + 1);
+        strcpy(alumno.observaciones, observaciones);
         alumno.baja = 0; // Asumiendo que los datos leídos no están dados de baja
         fwrite(&alumno, sizeof(AlumnoVariable), 1, datFile);
+        free(alumno.codigoUniversidad);
+        free(alumno.codigoFacultad);
+        free(alumno.codigoAsignatura);
+        free(alumno.codigoDocente);
+        free(alumno.observaciones);
     }
 
     fclose(txtFile);
