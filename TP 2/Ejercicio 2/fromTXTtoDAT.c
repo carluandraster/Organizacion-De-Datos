@@ -52,32 +52,17 @@ void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
 
     AlumnoVariable alumno;
     while (fscanf(txtFile, "%s %s %s %s %d %d %f %s",
-                  codigoUniversidad,
-                  codigoAsignatura,
-                  codigoFacultad,
-                  codigoDocente,
+                  &alumno.codigoUniversidad,
+                  &alumno.codigoAsignatura,
+                  &alumno.codigoFacultad,
+                  &alumno.codigoDocente,
                   &alumno.legajo,
                   &alumno.edad,
                   &alumno.nota,
-                  observaciones) == 8)
+                  &alumno.observaciones) == 8)
     {
-        alumno.codigoUniversidad = malloc(strlen(codigoUniversidad) + 1);
-        strcpy(alumno.codigoUniversidad, codigoUniversidad);
-        alumno.codigoFacultad = malloc(strlen(codigoFacultad) + 1);
-        strcpy(alumno.codigoFacultad, codigoFacultad);
-        alumno.codigoAsignatura = malloc(strlen(codigoAsignatura) + 1);
-        strcpy(alumno.codigoAsignatura, codigoAsignatura);
-        alumno.codigoDocente = malloc(strlen(codigoDocente) + 1);
-        strcpy(alumno.codigoDocente, codigoDocente);
-        alumno.observaciones = malloc(strlen(observaciones) + 1);
-        strcpy(alumno.observaciones, observaciones);
         alumno.baja = 0; // Asumiendo que los datos leídos no están dados de baja
         fwrite(&alumno, sizeof(AlumnoVariable), 1, datFile);
-        free(alumno.codigoUniversidad);
-        free(alumno.codigoFacultad);
-        free(alumno.codigoAsignatura);
-        free(alumno.codigoDocente);
-        free(alumno.observaciones);
     }
 
     fclose(txtFile);
@@ -87,5 +72,29 @@ void fromTXTtoDAT(const char *inputTXT, const char *outputDAT)
 int main(int argc, char const *argv[])
 {
     fromTXTtoDAT("alumnos.txt", "alumnosVariables.dat");
+
+    // Prueba
+    FILE *file = fopen("alumnosVariables.dat", "rb");
+
+    if (file == NULL)
+    {
+        perror("Error opening DAT file for reading");
+        return 1;
+    }
+    AlumnoVariable alumno;
+    while (fread(&alumno, sizeof(alumno), 1, file) == 1)
+    {
+        printf("Codigo Universidad: %s\n", alumno.codigoUniversidad);
+        printf("Codigo Facultad: %s\n", alumno.codigoFacultad);
+        printf("Codigo Asignatura: %s\n", alumno.codigoAsignatura);
+        printf("Legajo: %d\n", alumno.legajo);
+        printf("Edad: %d\n", alumno.edad);
+        printf("Codigo Docente: %s\n", alumno.codigoDocente);
+        printf("Nota: %.2f\n", alumno.nota);
+        printf("Observaciones: %s\n", alumno.observaciones);
+        printf("Baja: %d\n", alumno.baja);
+        printf("-------------------------\n");
+    }
+    fclose(file);
     return 0;
 }
