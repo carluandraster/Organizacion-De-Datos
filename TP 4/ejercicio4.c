@@ -32,17 +32,24 @@ int booleanoAleatorio()
 
 void insertarRandom(ArbolBinario *arbol)
 {
+    ArbolBinario aux;
     int dato = rand();
     int izquierda;
-    if (arbol == NULL)
+    if (*arbol == NULL)
         *arbol = crearNodo(dato);
     else
     {
         izquierda = booleanoAleatorio();
         if (izquierda)
-            insertarRandom(getSubarbolIzq(*arbol));
+        {
+            aux = getSubarbolIzq(*arbol);
+            insertarRandom(&aux);
+        }
         else
-            insertarRandom(getSubarbolDer(*arbol));
+        {
+            aux = getSubarbolDer(*arbol);
+            insertarRandom(&aux);
+        }
     }
 }
 
@@ -51,11 +58,8 @@ int main(int argc, char const *argv[])
     srand(time(NULL)); // Inicializa la semilla para la generacion de numeros aleatorios
     ArbolBinario arbol = NULL;
 
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%d\n", rand());
+    for (int i = 0; i < 100000; i++)
         insertarRandom(&arbol);
-    }
 
     return 0;
 }
