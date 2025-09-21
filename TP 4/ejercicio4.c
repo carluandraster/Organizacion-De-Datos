@@ -8,10 +8,9 @@
  * Redondea un numero decimal al entero mas cercano
  * Si la parte fraccionaria es igual o mayor a 0.5, redondea al entero mayor; de lo contrario, al menor
  *
- * Parametros:
- *      - x (double) - numero decimal a redondear
+ * @param x (double) - numero decimal a redondear
  *
- * Retorna: (int) - numero redondeado
+ * @returns (int) - numero redondeado
  */
 int redondear(double x)
 {
@@ -22,14 +21,27 @@ int redondear(double x)
         return round(x + 1);
 }
 
-// Devuelve 0 o 1 de forma aleatoria
-// No requiere parametros
-// Retorna: 0 con probabilidad 0.5 y 1 con probabilidad 0.5
+/**
+ * Genera un valor booleano aleatorio (0 o 1) con igual probabilidad
+ *
+ * @param void
+ *
+ * @returns (int) - 0 o 1
+ */
 int booleanoAleatorio()
 {
     return redondear((double)rand() / RAND_MAX);
 }
 
+/**
+ * Inserta un nodo con valor aleatorio en un arbol binario.
+ *
+ * La insercion se realiza de forma aleatoria, eligiendo al azar si se inserta en el subarbol izquierdo o derecho
+ *
+ * @param arbol (ArbolBinario*) - puntero al arbol binario donde se insertara el nodo
+ *
+ * @returns (void)
+ */
 void insertarRandom(ArbolBinario *arbol)
 {
     ArbolBinario aux;
