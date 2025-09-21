@@ -193,8 +193,14 @@ int *inorden(ArbolBinario arbol)
  */
 ArbolBinario buscar(ArbolBinario arbol, int dato)
 {
+    ArbolBinario resultado;
     if (arbol == NULL || arbol->dato == dato)
         return arbol;
     else
-        return buscar(arbol->izq, dato) || buscar(arbol->der, dato);
+    {
+        resultado = buscar(arbol->izq, dato);
+        if (resultado == NULL)
+            resultado = buscar(arbol->der, dato);
+        return resultado;
+    }
 }
