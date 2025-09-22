@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#define MENOS_INFINITO -2147483648
 
 /**
  * Redondea un numero decimal al entero mas cercano
@@ -30,29 +31,50 @@ int booleanoAleatorio()
     return redondear((double)rand() / RAND_MAX);
 }
 
-void insertarRandom(ArbolBinario *arbol)
+void _insertarRandom(ArbolBinario *arbol, int random)
 {
-    ArbolBinario aux;
-    int dato = rand();
-    int izquierda;
-    if (*arbol == NULL)
-        *arbol = crearNodo(dato);
-    else
+    int izquierda = booleanoAleatorio();
+    if (random > getDato(*arbol))
     {
-        while (dato < getDato(*arbol))
-            dato = rand();
-        izquierda = booleanoAleatorio();
         if (izquierda)
         {
-            aux = getSubarbolIzq(*arbol);
-            insertarRandom(&aux);
+            if (getSubarbolIzq(*arbol) == NULL)
+                setHijoIzq(*arbol, random);
+            else
+            {
+                ArbolBinario izq = getSubarbolIzq(*arbol);
+                _insertarRandom(&izq, random);
+            }
         }
         else
         {
-            aux = getSubarbolDer(*arbol);
-            insertarRandom(&aux);
+            if (getSubarbolDer(*arbol) == NULL)
+                setHijoDer(*arbol, random);
+            else
+            {
+                ArbolBinario der = getSubarbolDer(*arbol);
+                _insertarRandom(&der, random);
+            }
         }
     }
+    else
+    {
+        ArbolBinario nuevoNodo = crearNodo(random);
+        if (izquierda)
+            nuevoNodo->izq = *arbol;
+        else
+            nuevoNodo->der = *arbol;
+        *arbol = nuevoNodo;
+    }
+}
+
+void insertarRandom(ArbolBinario *arbol)
+{
+    int dato = rand();
+    if (*arbol == NULL)
+        *arbol = crearNodo(dato);
+    else
+        _insertarRandom(arbol, dato);
 }
 
 int main(int argc, char const *argv[])
