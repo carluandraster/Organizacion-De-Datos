@@ -52,9 +52,9 @@ void _insertar(ArbolB *arbol, TElementoArbol clave, TElementoArbol *promovida)
     NodoArbol *padre = NULL;
     int indiceHijo = -1;
     int i, N;
-    char salir = 0;
-    ListaOrdenada *nuevaLista;
+    ListaOrdenada *nuevasListas;
     TElementoArbol clavePromovida;
+    NodoArbol *nuevoNodo;
 
     if (arbol->raiz == NULL)
     {
@@ -64,18 +64,16 @@ void _insertar(ArbolB *arbol, TElementoArbol clave, TElementoArbol *promovida)
     else
     {
         // Buscar el nodo hoja donde se debe insertar la clave
-        while (nodoActual != NULL && !salir)
+        while (nodoActual != NULL)
         {
-            if (len(nodoActual->claves) < arbol->orden - 1 && nodoActual->hijos[0] == NULL)
+            if (nodoActual->hijos[0] == NULL)
             {
-                // Si el nodo tiene espacio y no tiene hijos, insertar la clave aquí
+                // Si el nodo no tiene hijos, insertar la clave aquí
                 insertar(nodoActual->claves, clave);
-                promovida = NULL; // No hay promoción
-                salir = 1;
+                nodoActual = NULL; // Para salir del bucle
             }
             else
             {
-                // Nodo lleno, buscar el hijo adecuado
                 padre = nodoActual;
                 N = len(nodoActual->claves);
                 i = 0;
@@ -85,36 +83,29 @@ void _insertar(ArbolB *arbol, TElementoArbol clave, TElementoArbol *promovida)
                     indiceHijo = N;
                 else
                     indiceHijo = i;
+                nodoActual = nodoActual->hijos[indiceHijo];
             }
-            i++;
         }
-        if (!salir)
+        if (len(nodoActual->claves) == arbol->orden)
         {
-            if (i == len(nodoActual->claves))
-                indiceHijo = len(nodoActual->claves);
+            *nuevasListas = dividir(padre->claves, len(padre->claves) / 2);
+            clavePromovida = getElemento(nuevasListas[1], 0);
 
-            nodoActual = nodoActual->hijos[indiceHijo];
+            // Crear un nuevo nodo para la nueva lista de claves
+            nuevoNodo = crearNodoArbol(arbol->orden, clavePromovida);
+            nuevoNodo->claves = nuevasListas[1];
+
+            // Ajustar los hijos del padre
+            for (int j = len(padre->claves); j > indiceHijo; j--)
+            {
+                padre->hijos[j + 1] = padre->hijos[j];
+            }
+            padre->hijos[indiceHijo + 1] = nuevoNodo;
+
+            // Insertar la clave promovida en el padre
+            insertar(padre->claves, clavePromovida);
         }
-    }
-
-    // Si llegamos aquí, significa que el nodo hoja está lleno y debemos dividirlo
-    if (padre != NULL && !salir)
-    {
-        *nuevaLista = dividir(padre->claves, len(padre->claves) / 2);
-        clavePromovida = getElemento(nuevaLista[1], 0);
-
-        // Crear un nuevo nodo para la nueva lista de claves
-        NodoArbol *nuevoNodo = crearNodoArbol(arbol->orden, clavePromovida);
-        nuevoNodo->claves = nuevaLista[1];
-
-        // Ajustar los hijos del padre
-        for (int j = len(padre->claves); j > indiceHijo; j--)
-        {
-            padre->hijos[j + 1] = padre->hijos[j];
-        }
-        padre->hijos[indiceHijo + 1] = nuevoNodo;
-
-        // Insertar la clave promovida en el padre
-        insertar(padre->claves, clavePromovida);
+        else
+            promovida = NULL; // No hay promoción
     }
 }
