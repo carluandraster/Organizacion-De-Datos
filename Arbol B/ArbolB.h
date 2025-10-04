@@ -14,8 +14,8 @@ typedef struct
 
 ArbolB *crearArbolB(int orden);
 NodoArbol *_crearNodoArbol(int orden, int nuevoElemento);
-void insertar(ArbolB *arbol, TElementoArbol clave);
+void insertarArb(ArbolB *arbol, TElementoArbol clave);
 void _insertar(ArbolB *arbol, TElementoArbol clave, TElementoArbol *promovida);
-void eliminar(ArbolB *arbol, TElementoArbol clave);
+void eliminarArb(ArbolB *arbol, TElementoArbol clave);
 TElementoArbol *recorrer(ArbolB *arbol);
-int len(ArbolB *arbol);
+int lenArb(ArbolB *arbol);

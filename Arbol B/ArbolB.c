@@ -1,4 +1,5 @@
 #include "ArbolB.h"
+#include "ListaOrdenada.h"
 
 /**
  * Crea un nuevo árbol B con el orden especificado.
@@ -36,7 +37,7 @@ NodoArbol *_crearNodoArbol(int orden, int nuevoElemento)
  * @param arbol Puntero al árbol B donde se insertará la clave.
  * @param clave La clave a insertar en el árbol B.
  */
-void insertar(ArbolB *arbol, TElementoArbol clave)
+void insertarArb(ArbolB *arbol, TElementoArbol clave)
 {
     if (arbol != NULL)
     {
@@ -64,28 +65,21 @@ void _insertar(ArbolB *arbol, TElementoArbol clave, TElementoArbol *promovida)
     else
     {
         // Buscar el nodo hoja donde se debe insertar la clave
-        while (nodoActual != NULL)
+        while (nodoActual->hijos[0] != NULL)
         {
-            if (nodoActual->hijos[0] == NULL)
-            {
-                // Si el nodo no tiene hijos, insertar la clave aquí
-                insertar(nodoActual->claves, clave);
-                nodoActual = NULL; // Para salir del bucle
-            }
+            padre = nodoActual;
+            N = len(nodoActual->claves);
+            i = 0;
+            while (i < N && clave >= getElemento(nodoActual->claves, i))
+                i++;
+            if (i == N)
+                indiceHijo = N;
             else
-            {
-                padre = nodoActual;
-                N = len(nodoActual->claves);
-                i = 0;
-                while (i < N && clave >= getElemento(nodoActual->claves, i))
-                    i++;
-                if (i == N)
-                    indiceHijo = N;
-                else
-                    indiceHijo = i;
-                nodoActual = nodoActual->hijos[indiceHijo];
-            }
+                indiceHijo = i;
+            padre = nodoActual;
+            nodoActual = nodoActual->hijos[indiceHijo];
         }
+        insertar(nodoActual->claves, clave);
         if (len(nodoActual->claves) == arbol->orden)
         {
             *nuevasListas = dividir(padre->claves, len(padre->claves) / 2);
