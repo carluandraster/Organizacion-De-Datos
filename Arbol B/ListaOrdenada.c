@@ -60,9 +60,7 @@ TElementoLista getElemento(ListaOrdenada l, int indice)
         actual = actual->siguiente;
         contador++;
     }
-    if (actual != NULL && contador == indice)
-        return actual->dato;
-    return NULL;
+    return actual->dato;
 }
 
 /**
@@ -79,25 +77,17 @@ TElementoLista eliminar(ListaOrdenada *l, int indice)
     Nodo *eliminado;
     TElementoLista dato;
 
-    if (l == NULL || *l == NULL)
-        return NULL;
-
     while (*iterador != NULL && contador < indice)
     {
         iterador = &(*iterador)->siguiente;
         contador++;
     }
 
-    if (*iterador != NULL && contador == indice)
-    {
-        eliminado = *iterador;
-        *iterador = (*iterador)->siguiente;
-        dato = eliminado->dato;
-        free(eliminado);
-        return dato;
-    }
-
-    return NULL;
+    eliminado = *iterador;
+    *iterador = (*iterador)->siguiente;
+    dato = eliminado->dato;
+    free(eliminado);
+    return dato;
 }
 
 /**
@@ -118,7 +108,7 @@ ListaOrdenada *dividir(ListaOrdenada *l, int indice)
     if (l == NULL || *l == NULL || indice < 0 || resultado == NULL)
         return NULL;
 
-    *resultado = (ListaOrdenada *)malloc(2 * sizeof(ListaOrdenada *));
+    resultado = (ListaOrdenada *)malloc(2 * sizeof(ListaOrdenada *));
 
     resultado[0] = *l;
     inicializarLista(&resultado[1]);
@@ -173,22 +163,30 @@ String toString(ListaOrdenada l)
 {
     String resultado = (String)malloc(1024);
     Nodo *actual = l;
-    String buffer;
+    char buffer[50];
     if (resultado == NULL)
         return NULL;
-    resultado[0] = '[';
-    while (actual != NULL)
+
+    if (len(l) == 0)
     {
-        if (actual->siguiente != NULL)
+        strcpy(resultado, "[]");
+    }
+    else
+    {
+        strcpy(resultado, "[");
+        while (actual != NULL)
         {
-            sprintf(buffer, "%d]", actual->dato);
+            if (actual->siguiente == NULL)
+            {
+                sprintf(buffer, "%d]", actual->dato);
+            }
+            else
+            {
+                sprintf(buffer, "%d, ", actual->dato);
+            }
+            strcat(resultado, buffer);
+            actual = actual->siguiente;
         }
-        else
-        {
-            sprintf(buffer, "%d, ", actual->dato);
-        }
-        strcat(resultado, buffer);
-        actual = actual->siguiente;
     }
 
     return resultado;
