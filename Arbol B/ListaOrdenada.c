@@ -46,9 +46,10 @@ void insertar(ListaOrdenada *l, TElementoLista e)
 
 /**
  * Obtiene el elemento en la posición indicada.
+ * Pre: la lista no está vacía y el índice es válido.
  * @param l Lista ordenada de la cual se obtendrá el elemento.
  * @param indice Índice del elemento a obtener (0-based).
- * @return El elemento en la posición indicada, o NULL si el índice es inválido.
+ * @return El elemento en la posición indicada
  */
 TElementoLista getElemento(ListaOrdenada l, int indice)
 {
@@ -66,9 +67,10 @@ TElementoLista getElemento(ListaOrdenada l, int indice)
 
 /**
  * Elimina el elemento en la posición indicada y lo retorna.
+ * Pre: la lista no está vacía y el índice es válido.
  * @param l Puntero a la lista ordenada de la cual se eliminará el elemento.
  * @param indice Índice del elemento a eliminar (0-based).
- * @return El elemento eliminado, o NULL si el índice es inválido.
+ * @return El elemento eliminado
  */
 TElementoLista eliminar(ListaOrdenada *l, int indice)
 {
