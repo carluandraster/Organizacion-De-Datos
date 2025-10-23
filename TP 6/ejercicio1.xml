@@ -1,0 +1,42 @@
+<factura tipo="A" fecha="23/10/2025" numero="0001-00001234" tipo_de_pago="efectivo" cantidad_de_remitos=1>
+    <empresa>
+        <nombre>Mi Empresa S.A.</nombre>
+        <direccion>Avenida Siempre Viva 742</direccion>
+        <cuit>30-87654321-0</cuit>
+        <contactos>
+            <cel>+54 9 11 1234 5678</cel>
+        </contactos>
+    </empresa>
+    <cliente>
+        <nombre>Juan Pérez</nombre>
+        <direccion>Calle Falsa 123</direccion>
+        <cuit>20-12345678-9</cuit>
+        <contactos>
+            <cel>+54 9 11 8765 4321</cel>
+        </contactos>
+        <tipo>Responsable Inscripto</tipo>
+    </cliente>
+    <items>
+        <item>
+            <codigo>001</codigo>
+            <descripcion>Producto A</descripcion>
+            <cantidad>2</cantidad>
+            <precio>150.00</precio>
+            <iva>21%</iva>
+            <importe>363.00</importe>
+        </item>
+        <item>
+            <codigo>002</codigo>
+            <descripcion>Producto B</descripcion>
+            <cantidad>1</cantidad>
+            <precio>300.00</precio>
+            <iva>21%</iva>
+            <importe>363.00</importe>
+        </item>
+    </items>
+    <totales>
+        <tipo_de_descuento>20%</tipo_de_descuento>
+        <descuento>145.20</descuento>
+        <total>580.80</total>
+    </totales>
+</factura>
