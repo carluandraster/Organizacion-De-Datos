@@ -28,6 +28,12 @@ def cesar_con_palabra(mensaje: str, desplazamiento: int, palabra_clave: str) -> 
             i += 1
             if i == 27:
                 i = 0
-    print(alfabeto_modificado)
+    mensaje_encriptado = ""
+    for char in mensaje:
+        if char in alfabeto:
+            indice = list(alfabeto).index(char)
+            mensaje_encriptado += alfabeto_modificado[indice]
+        else:
+            mensaje_encriptado += char
 
 cesar_con_palabra("", 5, "MURCIELAGO")
